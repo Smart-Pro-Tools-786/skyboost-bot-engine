@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>SkyBoost SMM | Automated Monetization Engine</title>
+    
     <meta name="description" content="SkyBoost SMM - World's fastest automated YouTube monetization panel. Get 4k Watch Hours and 1k Subs instantly.">
     <meta name="keywords" content="SMM Panel, YouTube Monetization, Buy Watch Hours, Cheap Subscribers, Viral Video Boost, SkyBoost Official">
     
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1055/1055666.png">
-    
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;500;800&display=swap" rel="stylesheet">
 
     <style>
-        /* Part 1: Main Global Styling */
         :root {
             --bg-deep: #050810;
             --bg-card: #0f172a;
@@ -23,6 +21,7 @@
             --text-dim: #94a3b8;
             --success-green: #10b981;
             --warning: #facc15;
+            --danger: #ef4444;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -35,361 +34,282 @@
             overflow-x: hidden;
         }
 
-        .header-logo {
-            text-align: center;
-            padding: 30px 10px;
-            background: linear-gradient(to bottom, #1e293b, transparent);
-        }
+        /* Animations */
+        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); } }
 
-        .main-logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 32px;
-            font-weight: 800;
-            background: linear-gradient(45deg, #3b82f6, #10b981);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px var(--accent-glow);
-            letter-spacing: 2px;
-        }
+        .app-container { max-width: 500px; margin: 0 auto; padding: 15px; }
 
-        .app-container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 15px;
-        }
-
-        .glass-card {
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        label {
-            display: block;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-dim);
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 14px;
-            background: #0b0f1a;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            color: white;
-            font-size: 15px;
-            margin-bottom: 15px;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        input:focus {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        .btn-primary {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(45deg, var(--accent-blue), #1d4ed8);
-            border: none;
-            border-radius: 14px;
-            color: white;
-            font-weight: 800;
-            font-size: 16px;
-            text-transform: uppercase;
-            cursor: pointer;
-            box-shadow: 0 4px 15px var(--accent-glow);
-            transition: 0.3s;
-        }
-
-        .delivery-badge {
-            display: inline-block;
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success-green);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        #secret-eye-trigger {
-            position: fixed; bottom: 20px; left: 20px; width: 35px; height: 35px;
-            background: rgba(255, 255, 255, 0.03); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 9999; color: rgba(255, 255, 255, 0.1);
-            font-size: 18px; border: 1px solid rgba(255, 255, 255, 0.02);
-        }
-
-        .admin-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-deep); z-index: 10000; overflow-y: auto; padding: 20px;
-        }
-
-        .admin-card { background: #111827; border: 1px solid #1e293b; border-radius: 15px; padding: 20px; margin-bottom: 20px; }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #1e293b; padding-bottom: 15px; }
-        .close-admin-btn { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; }
-
-        .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-        .social-item { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px 10px; border-radius: 15px; text-decoration: none; font-size: 11px; font-weight: 800; color: white; transition: 0.3s; border: 1px solid rgba(255,255,255,0.05); }
-        .fb-bg { background: linear-gradient(145deg, #1877F2, #0a56b9); }
-        .tk-bg { background: linear-gradient(145deg, #000000, #333333); border-color: #ff0050; }
-        .yt-bg { background: linear-gradient(145deg, #FF0000, #b90000); }
+        .header-logo { text-align: center; padding: 30px 10px; background: linear-gradient(to bottom, #1e293b, transparent); }
+        .main-logo { font-family: 'Orbitron', sans-serif; font-size: 32px; font-weight: 800; background: linear-gradient(45deg, #3b82f6, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px var(--accent-glow); letter-spacing: 2px; }
 
         .user-status-bar { display: flex; justify-content: space-between; align-items: center; background: rgba(30, 41, 59, 0.5); padding: 12px 20px; border-radius: 50px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.1); }
         .user-id-tag { color: var(--success-green); font-weight: bold; font-family: 'Orbitron'; font-size: 13px; }
         .wallet-tag { color: var(--warning); font-weight: bold; font-size: 14px; }
+
+        .glass-card { background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); position: relative; animation: slideIn 0.5s ease-out; }
+
+        label { display: block; font-size: 11px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; font-weight: 600; letter-spacing: 1px; }
+        input, select, textarea { width: 100%; padding: 14px; background: #0b0f1a; border: 1px solid #334155; border-radius: 12px; color: white; font-size: 15px; margin-bottom: 15px; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--accent-blue); box-shadow: 0 0 10px var(--accent-glow); }
+
+        .btn-primary { width: 100%; padding: 16px; background: linear-gradient(45deg, var(--accent-blue), #1d4ed8); border: none; border-radius: 14px; color: white; font-weight: 800; font-size: 16px; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 15px var(--accent-glow); transition: 0.3s; }
+        .btn-primary:active { transform: scale(0.98); }
+
+        .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        .social-item { display: flex; flex-direction: column; align-items: center; padding: 15px 5px; border-radius: 15px; text-decoration: none; font-size: 10px; font-weight: bold; color: white; border: 1px solid rgba(255,255,255,0.05); }
+        .fb-bg { background: #1877F2; } .tk-bg { background: #000; } .yt-bg { background: #FF0000; }
+
+        /* Admin Overlay */
+        .admin-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-deep); z-index: 10000; padding: 20px; overflow-y: auto; }
+        .admin-card { background: #111827; border: 1px solid #1e293b; border-radius: 15px; padding: 20px; margin-bottom: 20px; }
+        .close-admin-btn { background: var(--danger); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; float: right; }
+
+        #secret-eye-trigger { position: fixed; bottom: 20px; left: 20px; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 999; color: rgba(255,255,255,0.2); }
+
+        /* Ad Slots */
+        .ad-container { text-align: center; margin: 15px 0; overflow: hidden; border-radius: 10px; }
     </style>
 </head>
 <body>
+
     <div class="app-container">
-        <div class="ad-slot-top">
+        <div class="ad-container">
             <script type="text/javascript">
                 atOptions = { 'key' : '42af78b9072b82f5af0a86e82e8ee015', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
             </script>
             <script type="text/javascript" src="https://breachuptown.com/42af78b9072b82f5af0a86e82e8ee015/invoke.js"></script>
         </div>
 
-        <div class="header-logo">
+        <header class="header-logo">
             <h1 class="main-logo">SKYBOOST SMM</h1>
-            <p style="color: var(--text-dim); font-size: 12px; letter-spacing: 1px;">PREMIUM MONETIZATION SERVICES</p>
-        </div>
+            <p style="color: var(--text-dim); font-size: 11px;">ADVANCED AUTOMATED CLUSTER</p>
+        </header>
 
         <div class="user-status-bar">
-            <div class="user-id-tag">ID: <span id="uid-display">Generating...</span></div>
+            <div class="user-id-tag">UID: <span id="uid-display">...</span></div>
             <div class="wallet-tag">PKR <span id="balance-display">0.00</span></div>
         </div>
 
         <div class="social-grid">
-            <a href="https://www.facebook.com/SyedAliHassanShaOfficial" target="_blank" class="social-item fb-bg"><span>Facebook</span></a>
-            <a href="https://www.tiktok.com/@zawar_syed_ali_hassan" target="_blank" class="social-item tk-bg"><span>TikTok</span></a>
-            <a href="https://youtube.com/@mast_tv_official" target="_blank" class="social-item yt-bg"><span>YouTube</span></a>
-        </div>
-
-        <div style="margin-bottom: 20px; text-align: center;">
-            <script type="text/javascript">
-                atOptions = { 'key' : '4f3495621bdcda3f8eaa1d9ef89d2a61', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-            </script>
-            <script type="text/javascript" src="https://breachuptown.com/4f3495621bdcda3f8eaa1d9ef89d2a61/invoke.js"></script>
+            <a href="https://www.facebook.com/SyedAliHassanShaOfficial" target="_blank" class="social-item fb-bg">Facebook</a>
+            <a href="https://www.tiktok.com/@zawar_syed_ali_hassan" target="_blank" class="social-item tk-bg">TikTok</a>
+            <a href="https://youtube.com/@mast_tv_official" target="_blank" class="social-item yt-bg">YouTube</a>
         </div>
 
         <div class="glass-card">
-            <div class="delivery-badge">⚡ INSTANT START SYSTEM</div>
-            <h2 style="font-size: 20px; margin-bottom: 20px; color: white; font-family: 'Orbitron';">Place Your Order</h2>
-            <label>YouTube Video / Channel Link</label>
-            <input type="text" id="target-link" placeholder="https://www.youtube.com/watch?v=...">
-            <label>Select Monetization Service</label>
+            <div style="color: var(--success-green); font-size: 10px; font-weight: 800; margin-bottom: 10px;">⚡ SYSTEM: ACTIVE</div>
+            <h2 style="font-family: 'Orbitron'; font-size: 18px; margin-bottom: 20px;">Place New Order</h2>
+            
+            <label>YouTube Link (Video/Channel)</label>
+            <input type="text" id="target-link" placeholder="https://youtube.com/watch?v=...">
+
+            <label>Select Service</label>
             <select id="service-select">
                 <option value="3000">1,000 Subscribers - 3,000 PKR</option>
                 <option value="5000">4,000 Watch Hours - 5,000 PKR</option>
-                <option value="8000">Full Monetization Package - 8,000 PKR</option>
-                <option value="200">1,000 High-Retention Views - 200 PKR</option>
-                <option value="300">1,000 Real Likes - 300 PKR</option>
+                <option value="8000">Full Monetization Pack - 8,000 PKR</option>
+                <option value="200">1,000 Views - 200 PKR</option>
+                <option value="300">1,000 Likes - 300 PKR</option>
             </select>
-            <button class="btn-primary" onclick="processOrderRequest()">🚀 Launch Boost Now</button>
+
+            <button class="btn-primary" onclick="processOrder()">🚀 Launch Boost</button>
         </div>
 
         <div class="glass-card" style="border-style: dashed; border-color: var(--accent-blue);">
-            <h2 style="font-size: 18px; color: var(--success-green); margin-bottom: 15px; font-family: 'Orbitron';">Recharge Your Wallet</h2>
-            <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; border: 1px solid #1e293b; margin-bottom: 15px;">
-                <p>Bank: <strong id="bank-name-display">EasyPaisa / JazzCash</strong></p>
-                <p>Number: <strong id="acc-num-display" style="color: var(--accent-blue); font-size: 20px;">03219379597</strong></p>
-                <p>Title: <strong id="acc-title-display">Zaigham</strong></p>
+            <h2 style="font-family: 'Orbitron'; font-size: 18px; color: var(--warning); margin-bottom: 15px;">Wallet Recharge</h2>
+            
+            <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 15px; border: 1px solid #1e293b; margin-bottom: 20px;">
+                <p style="font-size: 11px; color: var(--text-dim);">SEND PAYMENT TO:</p>
+                <div style="margin-top: 10px;">
+                    <span id="bank-name-display" style="font-weight: bold; color: white;">EasyPaisa / JazzCash</span><br>
+                    <span id="acc-num-display" style="font-size: 22px; color: var(--accent-blue); font-weight: 800; letter-spacing: 1px;">03219379597</span><br>
+                    <span id="acc-title-display" style="color: var(--success-green);">Title: Zaigham</span>
+                </div>
             </div>
-            <label>Amount Sent (PKR)</label>
-            <input type="number" id="deposit-amount" placeholder="e.g. 5000">
-            <label>Upload Screenshot</label>
+
+            <label>Amount Sent</label>
+            <input type="number" id="deposit-amount" placeholder="PKR Amount">
+
+            <label>Payment Proof (Screenshot)</label>
             <input type="file" id="payment-screenshot" accept="image/*">
-            <div id="upload-status"></div>
-            <button class="btn-primary" style="background: var(--success-green);" onclick="submitPaymentProof()">Verify Payment</button>
+
+            <div id="upload-status" style="font-size: 12px; text-align: center; margin-bottom: 10px;"></div>
+            <button class="btn-primary" style="background: var(--success-green);" onclick="submitProof()">Verify Transaction</button>
         </div>
 
         <div class="glass-card">
-            <h3 style="font-family: 'Orbitron'; font-size: 16px;">User Reviews</h3>
-            <div id="review-display-area" style="margin-top:15px;">
-                <p style="font-size:12px;"><b>Hamza:</b> Great service! ⭐⭐⭐⭐⭐</p>
+            <h3 style="font-family: 'Orbitron'; font-size: 15px; margin-bottom: 15px;">Client Feedback</h3>
+            <div id="review-area" style="max-height: 200px; overflow-y: auto; margin-bottom: 15px;">
+                <div style="background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin-bottom: 10px;">
+                    <span style="color: var(--warning);">⭐⭐⭐⭐⭐</span><br>
+                    <small><b>Syed Hamza:</b> Best SMM Panel in Pakistan!</small>
+                </div>
             </div>
-            <div id="star-rating" style="font-size: 28px; cursor: pointer; color: #475569;" onclick="setRating()">☆ ☆ ☆ ☆ ☆</div>
-            <textarea id="user-comment" placeholder="Feedback..."></textarea>
-            <button class="btn-primary" style="padding:10px; font-size:12px;" onclick="postReview()">Post Review</button>
+            <div id="star-rating" style="font-size: 25px; cursor: pointer; color: #334155; margin-bottom: 10px;" onclick="setRating()">☆ ☆ ☆ ☆ ☆</div>
+            <textarea id="user-comment" placeholder="Write your experience..." rows="2"></textarea>
+            <button class="btn-primary" style="padding: 10px; font-size: 12px; background: #334155;" onclick="postReview()">Submit Review</button>
         </div>
 
-        <div id="admin-panel" class="admin-overlay">
-            <div class="admin-header">
-                <h2>MASTER CONTROL</h2>
-                <button class="close-admin-btn" onclick="closeAdmin()">EXIT</button>
-            </div>
-            <div class="admin-card">
-                <h3>1. Update Banking Info</h3>
-                <input type="text" id="edit-bank-name" placeholder="Bank Name">
-                <input type="text" id="edit-acc-num" placeholder="Account Number">
-                <input type="text" id="edit-acc-title" placeholder="Account Title">
-                <button class="btn-primary" onclick="updateBankDetails()">Apply Changes</button>
-            </div>
-            <div class="admin-card">
-                <h3>2. Manual Wallet Inject</h3>
-                <input type="text" id="target-user-id" placeholder="User ID">
-                <input type="number" id="inject-amount" placeholder="Amount">
-                <button class="btn-primary" onclick="updateUserBalance()">Update Wallet</button>
-            </div>
-            <div class="admin-card">
-                <h3>3. Incoming Proofs</h3>
-                <div id="admin-order-list"></div>
-            </div>
+        <div class="ad-container">
+            <script type="text/javascript">
+                atOptions = { 'key' : '837b0cf25a2c46b6684bcb6db1c74b00', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+            </script>
+            <script type="text/javascript" src="https://breachuptown.com/837b0cf25a2c46b6684bcb6db1c74b00/invoke.js"></script>
         </div>
 
-        <div id="secret-eye-trigger" onclick="handleSecretLogin()">👁️</div>
-
-        <footer style="text-align: center; padding: 20px; color: var(--text-dim); font-size: 11px;">
-            <p>© 2026 SKYBOOST SMM CLUSTER</p>
+        <footer style="text-align: center; padding: 20px; color: var(--text-dim); font-size: 10px;">
+            © 2026 SKYBOOST CLUSTER | ALL RIGHTS RESERVED
         </footer>
     </div>
 
+    <div id="admin-panel" class="admin-overlay">
+        <button class="close-admin-btn" onclick="closeAdmin()">EXIT SYSTEM</button>
+        <h2 style="font-family: 'Orbitron'; color: var(--accent-blue);">MASTER ADMIN</h2>
+        <hr style="border: 0; border-top: 1px solid #1e293b; margin: 20px 0;">
+
+        <div class="admin-card">
+            <h4 style="color: var(--success-green); margin-bottom: 10px;">1. Change Banking Details</h4>
+            <input type="text" id="edit-bank" placeholder="Bank Name (e.g. JazzCash)">
+            <input type="text" id="edit-num" placeholder="Account Number">
+            <input type="text" id="edit-title" placeholder="Account Title">
+            <button class="btn-primary" onclick="saveBank()">Update Live Info</button>
+        </div>
+
+        <div class="admin-card">
+            <h4 style="color: var(--warning); margin-bottom: 10px;">2. Wallet Injector</h4>
+            <input type="text" id="target-uid" placeholder="Target User ID (e.g. SB-123)">
+            <input type="number" id="inject-amt" placeholder="Amount to Add">
+            <button class="btn-primary" onclick="injectBalance()">Add Balance</button>
+        </div>
+
+        <div class="admin-card">
+            <h4 style="color: var(--accent-blue); margin-bottom: 10px;">3. Order & Proof Logs</h4>
+            <div id="admin-logs" style="font-size: 11px; color: var(--text-dim);">No recent activity.</div>
+        </div>
+    </div>
+
+    <div id="secret-eye-trigger" onclick="handleAdminLogin()">👁️</div>
+
 <script>
-    // --- 1. System Setup ---
+    // --- Initial System ---
     let tapCount = 0;
-    let skyUID = localStorage.getItem('sky_uid') || 'SB-' + Math.floor(100000 + Math.random() * 900000);
-    localStorage.setItem('sky_uid', skyUID);
+    let myUID = localStorage.getItem('sky_uid') || 'SB-' + Math.floor(100000 + Math.random() * 900000);
+    localStorage.setItem('sky_uid', myUID);
 
     window.onload = function() {
-        document.getElementById('uid-display').innerText = skyUID;
-        updateUIBalance();
-        loadBankInfo();
+        document.getElementById('uid-display').innerText = myUID;
+        refreshUI();
+        loadBank();
     };
 
-    function updateUIBalance() {
+    function refreshUI() {
         let bal = localStorage.getItem('sky_bal') || '0.00';
         document.getElementById('balance-display').innerText = parseFloat(bal).toLocaleString();
     }
 
-    // --- 2. Admin Logic ---
-    function handleSecretLogin() {
+    // --- Admin Security ---
+    function handleAdminLogin() {
         tapCount++;
         if (tapCount >= 10) {
-            let pass = prompt("CODE:");
+            let pass = prompt("ENTER MASTER CODE:");
             if (pass === "7866_zaigham_5121472") {
-                document.getElementById('admin-panel').style.display = 'block';
-            }
+                let phone = prompt("VERIFY PHONE NUMBER:");
+                if (phone === "03219379597") {
+                    document.getElementById('admin-panel').style.display = 'block';
+                } else { alert("Verification Failed!"); }
+            } else { alert("Unauthorized!"); }
             tapCount = 0;
         }
     }
 
     function closeAdmin() { document.getElementById('admin-panel').style.display = 'none'; }
 
-    function updateBankDetails() {
-        localStorage.setItem('saved_bank_name', document.getElementById('edit-bank-name').value);
-        localStorage.setItem('saved_bank_num', document.getElementById('edit-acc-num').value);
-        localStorage.setItem('saved_bank_title', document.getElementById('edit-acc-title').value);
-        loadBankInfo();
-        alert("Bank Details Updated!");
+    // --- Bank Management ---
+    function saveBank() {
+        localStorage.setItem('bank_n', document.getElementById('edit-bank').value);
+        localStorage.setItem('bank_num', document.getElementById('edit-num').value);
+        localStorage.setItem('bank_t', document.getElementById('edit-title').value);
+        loadBank();
+        alert("Bank Details Updated Globally!");
     }
 
-    function loadBankInfo() {
-        if(localStorage.getItem('saved_bank_num')) {
-            document.getElementById('bank-name-display').innerText = localStorage.getItem('saved_bank_name');
-            document.getElementById('acc-num-display').innerText = localStorage.getItem('saved_bank_num');
-            document.getElementById('acc-title-display').innerText = localStorage.getItem('saved_bank_title');
+    function loadBank() {
+        if(localStorage.getItem('bank_num')) {
+            document.getElementById('bank-name-display').innerText = localStorage.getItem('bank_n');
+            document.getElementById('acc-num-display').innerText = localStorage.getItem('bank_num');
+            document.getElementById('acc-title-display').innerText = "Title: " + localStorage.getItem('bank_t');
         }
     }
 
-    // --- 3. Order Logic ---
-    function processOrderRequest() {
+    // --- Order Logic ---
+    function processOrder() {
+        const link = document.getElementById('target-link').value;
         const price = parseFloat(document.getElementById('service-select').value);
-        let bal = parseFloat(localStorage.getItem('sky_bal') || 0);
-        if (bal < price) { alert("Insufficient Balance!"); return; }
+        let currentBal = parseFloat(localStorage.getItem('sky_bal') || 0);
+
+        if(!link.includes("youtu")) { alert("Enter valid YouTube link!"); return; }
+        if(currentBal < price) { alert("Insufficient Balance! Please Recharge."); return; }
+
+        localStorage.setItem('sky_bal', (currentBal - price).toFixed(2));
+        refreshUI();
+        alert("🚀 Order Success! Tracking ID: " + Math.random().toString(36).substr(2, 9));
         
-        localStorage.setItem('sky_bal', (bal - price).toFixed(2));
-        updateUIBalance();
-        alert("🚀 Order Placed Successfully!");
+        logToAdmin("Order: " + price + " PKR for " + link);
     }
 
-    // --- 4. Anti-Fraud & Payment Logic ---
-    let lastUploadTime = localStorage.getItem('last_upload_time') || 0;
-    let uploadedFileHashes = JSON.parse(localStorage.getItem('uploaded_hashes')) || [];
-
-    async function submitPaymentProof() {
-        const amountInput = document.getElementById('deposit-amount');
-        const fileInput = document.getElementById('payment-screenshot');
+    // --- Payment Proof ---
+    function submitProof() {
+        const amt = document.getElementById('deposit-amount').value;
         const status = document.getElementById('upload-status');
-        const currentTime = new Date().getTime();
-
-        if (currentTime - lastUploadTime < 600000) { 
-            alert("Wait 10 minutes between requests."); return;
+        
+        if(!amt || !document.getElementById('payment-screenshot').files[0]) {
+            alert("Fill all fields!"); return;
         }
 
-        if (!amountInput.value || !fileInput.files[0]) { alert("Enter amount and attach screenshot!"); return; }
-
-        const file = fileInput.files[0];
-        const fingerprint = file.name + file.size;
-
-        if (uploadedFileHashes.includes(fingerprint)) {
-            alert("❌ DUPLICATE DETECTED! Screenshot already used."); return;
-        }
-
-        status.innerHTML = "<span style='color:orange'>📡 Scanning Receipt...</span>";
+        status.innerHTML = "<span style='color:var(--warning)'>⏳ AI Scanning Receipt...</span>";
         
         setTimeout(() => {
-            const list = document.getElementById('admin-order-list');
-            const entry = `
-                <div style="border-bottom: 1px solid #334155; padding: 10px;">
-                    ID: ${skyUID} | PKR ${amountInput.value} 
-                    <button onclick="approveBalance('${skyUID}', ${amountInput.value}, this)" style="background:green; color:white; border:none; padding:2px 5px; border-radius:4px; cursor:pointer;">Approve</button>
-                </div>`;
-            list.innerHTML = entry + list.innerHTML;
-
-            uploadedFileHashes.push(fingerprint);
-            localStorage.setItem('uploaded_hashes', JSON.stringify(uploadedFileHashes));
-            localStorage.setItem('last_upload_time', currentTime);
-            lastUploadTime = currentTime;
-
-            status.innerHTML = "<span style='color:lightgreen'>✅ Verification Sent.</span>";
-            alert("Proof sent! Balance will update after manual check.");
+            status.innerHTML = "<span style='color:var(--success-green)'>✅ Sent to Admin! Wait 15 mins.</span>";
+            logToAdmin("PAYMENT PROOF: " + amt + " PKR from " + myUID);
+            alert("Verification Request Submitted!");
         }, 3000);
     }
 
-    function approveBalance(uid, amount, btn) {
-        if(uid === localStorage.getItem('sky_uid')) {
-            let bal = parseFloat(localStorage.getItem('sky_bal') || 0);
-            localStorage.setItem('sky_bal', (bal + amount).toFixed(2));
-            updateUIBalance();
-            alert("Balance Added!");
-        }
-        btn.innerText = "DONE"; btn.disabled = true;
-    }
+    // --- Wallet Injection ---
+    function injectBalance() {
+        const tid = document.getElementById('target-uid').value;
+        const amt = parseFloat(document.getElementById('inject-amt').value);
 
-    function updateUserBalance() {
-        const targetID = document.getElementById('target-user-id').value;
-        const amount = parseFloat(document.getElementById('inject-amount').value);
-        if (targetID === skyUID) {
-            let bal = parseFloat(localStorage.getItem('sky_bal') || 0);
-            localStorage.setItem('sky_bal', (bal + amount).toFixed(2));
-            updateUIBalance();
-            alert("Wallet Updated!");
+        if(tid === myUID) {
+            let b = parseFloat(localStorage.getItem('sky_bal') || 0);
+            localStorage.setItem('sky_bal', (b + amt).toFixed(2));
+            refreshUI();
+            alert("Balance Injected!");
+        } else {
+            alert("Balance Logged for User: " + tid);
         }
     }
 
+    function logToAdmin(msg) {
+        const logs = document.getElementById('admin-logs');
+        const time = new Date().toLocaleTimeString();
+        logs.innerHTML = `<div>[${time}] ${msg}</div>` + logs.innerHTML;
+    }
+
+    // --- Reviews ---
     function setRating() {
         document.getElementById('star-rating').innerHTML = "⭐⭐⭐⭐⭐";
         document.getElementById('star-rating').style.color = "gold";
-        alert("Thanks for 5 stars!");
     }
 
     function postReview() {
-        const comment = document.getElementById('user-comment').value;
-        if (!comment) return;
+        const txt = document.getElementById('user-comment').value;
+        if(!txt) return;
         const div = document.createElement('div');
-        div.innerHTML = `<p style='font-size:12px;'><b>You:</b> ${comment} ⭐⭐⭐⭐⭐</p>`;
-        document.getElementById('review-display-area').prepend(div);
+        div.style.cssText = "background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin-bottom: 10px;";
+        div.innerHTML = `<span style="color: var(--warning);">⭐⭐⭐⭐⭐</span><br><small><b>You (Verified):</b> ${txt}</small>`;
+        document.getElementById('review-area').prepend(div);
         document.getElementById('user-comment').value = "";
     }
 </script>

@@ -1,0 +1,19 @@
+name: SkyBoost-Bot-Runner
+on:
+  schedule:
+    - cron: '*/30 * * * *' # یہ ہر 30 منٹ بعد خود چلے گا
+  workflow_dispatch: # آپ خود بھی بٹن دبا کر چلا سکتے ہیں
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+      - name: Run Python Bot
+        run: python bot.py

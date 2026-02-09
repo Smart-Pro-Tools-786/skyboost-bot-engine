@@ -3,319 +3,499 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkyBoost SMM | Automated Monetization Engine</title>
+    <title>SkyBoost SMM | Premium Growth Panel</title>
     
-    <meta name="description" content="SkyBoost SMM - World's fastest automated YouTube monetization panel. Get 4k Watch Hours and 1k Subs instantly.">
-    <meta name="keywords" content="SMM Panel, YouTube Monetization, Buy Watch Hours, Cheap Subscribers, Viral Video Boost, SkyBoost Official">
-    
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1055/1055666.png">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;500;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
     <style>
         :root {
-            --bg-deep: #050810;
+            --bg-dark: #020617;
             --bg-card: #0f172a;
-            --accent-blue: #2563eb;
-            --accent-glow: rgba(37, 99, 235, 0.4);
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --accent-purple: #8b5cf6;
             --text-main: #f8fafc;
             --text-dim: #94a3b8;
-            --success-green: #10b981;
             --warning: #facc15;
             --danger: #ef4444;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-deep);
+            background-color: var(--bg-dark);
             color: var(--text-main);
             line-height: 1.6;
             overflow-x: hidden;
+            background-image: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent),
+                              radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.1), transparent);
         }
 
-        /* Animations */
-        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); } }
+        /* --- Header & Logo --- */
+        .header {
+            padding: 40px 20px;
+            text-align: center;
+        }
 
-        .app-container { max-width: 500px; margin: 0 auto; padding: 15px; }
+        .main-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #60a5fa, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
 
-        .header-logo { text-align: center; padding: 30px 10px; background: linear-gradient(to bottom, #1e293b, transparent); }
-        .main-logo { font-family: 'Orbitron', sans-serif; font-size: 32px; font-weight: 800; background: linear-gradient(45deg, #3b82f6, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px var(--accent-glow); letter-spacing: 2px; }
+        /* --- Main Layout --- */
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0 20px 100px 20px;
+        }
 
-        .user-status-bar { display: flex; justify-content: space-between; align-items: center; background: rgba(30, 41, 59, 0.5); padding: 12px 20px; border-radius: 50px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.1); }
-        .user-id-tag { color: var(--success-green); font-weight: bold; font-family: 'Orbitron'; font-size: 13px; }
-        .wallet-tag { color: var(--warning); font-weight: bold; font-size: 14px; }
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
 
-        .glass-card { background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); position: relative; animation: slideIn 0.5s ease-out; }
+        /* --- User Stats Bar --- */
+        .user-stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 15px 25px;
+            border-radius: 100px;
+            margin-bottom: 30px;
+        }
 
-        label { display: block; font-size: 11px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; font-weight: 600; letter-spacing: 1px; }
-        input, select, textarea { width: 100%; padding: 14px; background: #0b0f1a; border: 1px solid #334155; border-radius: 12px; color: white; font-size: 15px; margin-bottom: 15px; outline: none; transition: 0.3s; }
-        input:focus { border-color: var(--accent-blue); box-shadow: 0 0 10px var(--accent-glow); }
+        .stat-group { display: flex; flex-direction: column; }
+        .stat-label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; font-weight: 700; }
+        .stat-value { font-family: 'Orbitron'; font-size: 14px; color: var(--accent-blue); }
 
-        .btn-primary { width: 100%; padding: 16px; background: linear-gradient(45deg, var(--accent-blue), #1d4ed8); border: none; border-radius: 14px; color: white; font-weight: 800; font-size: 16px; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 15px var(--accent-glow); transition: 0.3s; }
-        .btn-primary:active { transform: scale(0.98); }
+        /* --- Input Styles --- */
+        .input-wrapper { margin-bottom: 20px; }
+        label { display: block; font-size: 12px; font-weight: 600; color: var(--text-dim); margin-bottom: 8px; margin-left: 5px; }
+        
+        input, select, textarea {
+            width: 100%;
+            background: #0b1224;
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: 14px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+        }
 
-        .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-        .social-item { display: flex; flex-direction: column; align-items: center; padding: 15px 5px; border-radius: 15px; text-decoration: none; font-size: 10px; font-weight: bold; color: white; border: 1px solid rgba(255,255,255,0.05); }
-        .fb-bg { background: #1877F2; } .tk-bg { background: #000; } .yt-bg { background: #FF0000; }
+        input:focus, select:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
 
-        /* Admin Overlay */
-        .admin-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-deep); z-index: 10000; padding: 20px; overflow-y: auto; }
-        .admin-card { background: #111827; border: 1px solid #1e293b; border-radius: 15px; padding: 20px; margin-bottom: 20px; }
-        .close-admin-btn { background: var(--danger); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; float: right; }
+        /* --- Buttons --- */
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border-radius: 14px;
+            border: none;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
 
-        #secret-eye-trigger { position: fixed; bottom: 20px; left: 20px; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 999; color: rgba(255,255,255,0.2); }
+        .btn-primary { background: var(--accent-blue); color: white; box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3); }
+        .btn-success { background: var(--accent-green); color: white; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); }
+        .btn:hover { transform: translateY(-3px); opacity: 0.9; }
+        .btn:active { transform: translateY(1px); }
 
-        /* Ad Slots */
-        .ad-container { text-align: center; margin: 15px 0; overflow: hidden; border-radius: 10px; }
+        /* --- Live Progress Tracker --- */
+        .tracker-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .pulse-icon { width: 10px; height: 10px; background: var(--accent-green); border-radius: 50%; animation: pulse 1.5s infinite; }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0px rgba(16, 185, 129, 0.7); }
+            100% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+        }
+
+        .progress-container { background: #0b1224; height: 12px; border-radius: 20px; margin: 20px 0; overflow: hidden; border: 1px solid var(--border); }
+        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); border-radius: 20px; transition: width 1s ease; }
+
+        .counter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .counter-box { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 15px; text-align: center; border: 1px solid var(--border); }
+        .counter-num { display: block; font-family: 'Orbitron'; font-size: 20px; color: var(--accent-green); }
+
+        /* --- Payment Section --- */
+        .bank-info { background: linear-gradient(135deg, #1e293b, #0f172a); padding: 20px; border-radius: 18px; border: 1px dashed var(--accent-blue); margin-bottom: 20px; }
+        .bank-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px; }
+        .copy-btn { color: var(--accent-blue); cursor: pointer; font-size: 12px; }
+
+        /* --- Admin Panel Styles --- */
+        .admin-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-dark);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 30px 20px;
+        }
+
+        .admin-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+        .admin-section-title { font-size: 18px; color: var(--warning); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        
+        .log-item { background: #1e293b; padding: 15px; border-radius: 12px; margin-bottom: 10px; font-size: 12px; border-left: 4px solid var(--accent-blue); }
+
+        #secret-trigger {
+            position: fixed; bottom: 20px; left: 20px;
+            width: 40px; height: 40px;
+            background: transparent;
+            z-index: 999;
+            cursor: pointer;
+            opacity: 0.1;
+        }
+
+        /* --- Animations --- */
+        .fade-in { animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        <div class="ad-container">
-            <script type="text/javascript">
-                atOptions = { 'key' : '42af78b9072b82f5af0a86e82e8ee015', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
-            </script>
-            <script type="text/javascript" src="https://breachuptown.com/42af78b9072b82f5af0a86e82e8ee015/invoke.js"></script>
+<div id="secret-trigger" onclick="adminAuth()"></div>
+
+<div class="container">
+    <div class="header">
+        <h1 class="main-logo">SkyBoost SMM</h1>
+        <p style="font-size: 10px; color: var(--text-dim); margin-top: 5px;">WORLD'S FASTEST SOCIAL GROWTH PANEL</p>
+    </div>
+
+    <div class="user-stats-bar">
+        <div class="stat-group">
+            <span class="stat-label">Member ID</span>
+            <span id="display-id" class="stat-value">...</span>
+        </div>
+        <div class="stat-group" style="text-align: right;">
+            <span class="stat-label">Available Balance</span>
+            <span class="stat-value" style="color: var(--warning);">PKR <span id="display-bal">0.00</span></span>
+        </div>
+    </div>
+
+    <div id="tracker-section" class="glass-card fade-in" style="display: none; border: 1px solid var(--accent-green);">
+        <div class="tracker-header">
+            <span style="font-size: 12px; font-weight: 800; color: var(--accent-green);">
+                <i class="fa-solid fa-satellite-dish"></i> LIVE PROCESSING
+            </span>
+            <div class="pulse-icon"></div>
+        </div>
+        <p id="track-service-name" style="font-size: 14px; font-weight: 700;"></p>
+        <p id="track-url" style="font-size: 11px; color: var(--text-dim); word-break: break-all; margin-top: 5px;"></p>
+        
+        <div class="progress-container">
+            <div id="main-progress" class="progress-bar"></div>
         </div>
 
-        <header class="header-logo">
-            <h1 class="main-logo">SKYBOOST SMM</h1>
-            <p style="color: var(--text-dim); font-size: 11px;">ADVANCED AUTOMATED CLUSTER</p>
-        </header>
+        <div class="counter-grid">
+            <div class="counter-box">
+                <span class="stat-label">Delivered</span>
+                <span id="count-done" class="counter-num">0</span>
+            </div>
+            <div class="counter-box">
+                <span class="stat-label">Total Target</span>
+                <span id="count-target" class="counter-num">0</span>
+            </div>
+        </div>
+    </div>
 
-        <div class="user-status-bar">
-            <div class="user-id-tag">UID: <span id="uid-display">...</span></div>
-            <div class="wallet-tag">PKR <span id="balance-display">0.00</span></div>
+    <div class="glass-card fade-in">
+        <div class="admin-section-title" style="color: var(--text-main); font-size: 15px;">
+            <i class="fa-solid fa-cart-shopping" style="color: var(--accent-blue);"></i> NEW ORDER
         </div>
 
-        <div class="social-grid">
-            <a href="https://www.facebook.com/SyedAliHassanShaOfficial" target="_blank" class="social-item fb-bg">Facebook</a>
-            <a href="https://www.tiktok.com/@zawar_syed_ali_hassan" target="_blank" class="social-item tk-bg">TikTok</a>
-            <a href="https://youtube.com/@mast_tv_official" target="_blank" class="social-item yt-bg">YouTube</a>
+        <div class="input-wrapper">
+            <label>Paste Link (YouTube/Social)</label>
+            <input type="text" id="order-link" placeholder="https://youtube.com/watch?v=...">
         </div>
 
-        <div class="glass-card">
-            <div style="color: var(--success-green); font-size: 10px; font-weight: 800; margin-bottom: 10px;">⚡ SYSTEM: ACTIVE</div>
-            <h2 style="font-family: 'Orbitron'; font-size: 18px; margin-bottom: 20px;">Place New Order</h2>
-            
-            <label>YouTube Link (Video/Channel)</label>
-            <input type="text" id="target-link" placeholder="https://youtube.com/watch?v=...">
-
+        <div class="input-wrapper">
             <label>Select Service</label>
-            <select id="service-select">
-                <option value="3000">1,000 Subscribers - 3,000 PKR</option>
-                <option value="5000">4,000 Watch Hours - 5,000 PKR</option>
-                <option value="8000">Full Monetization Pack - 8,000 PKR</option>
-                <option value="200">1,000 Views - 200 PKR</option>
-                <option value="300">1,000 Likes - 300 PKR</option>
+            <select id="order-service">
+                <option value="3000" data-name="1000 Subscribers" data-qty="1000">1,000 Subscribers - 3000 PKR</option>
+                <option value="5000" data-name="4000 Watch Hours" data-qty="4000">4,000 Watch Hours - 5000 PKR</option>
+                <option value="200" data-name="1000 Video Views" data-qty="1000">1,000 Video Views - 200 PKR</option>
+                <option value="150" data-name="1000 Video Likes" data-qty="1000">1,000 Video Likes - 150 PKR</option>
             </select>
-
-            <button class="btn-primary" onclick="processOrder()">🚀 Launch Boost</button>
         </div>
 
-        <div class="glass-card" style="border-style: dashed; border-color: var(--accent-blue);">
-            <h2 style="font-family: 'Orbitron'; font-size: 18px; color: var(--warning); margin-bottom: 15px;">Wallet Recharge</h2>
-            
-            <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 15px; border: 1px solid #1e293b; margin-bottom: 20px;">
-                <p style="font-size: 11px; color: var(--text-dim);">SEND PAYMENT TO:</p>
-                <div style="margin-top: 10px;">
-                    <span id="bank-name-display" style="font-weight: bold; color: white;">EasyPaisa / JazzCash</span><br>
-                    <span id="acc-num-display" style="font-size: 22px; color: var(--accent-blue); font-weight: 800; letter-spacing: 1px;">03219379597</span><br>
-                    <span id="acc-title-display" style="color: var(--success-green);">Title: Zaigham</span>
-                </div>
-            </div>
-
-            <label>Amount Sent</label>
-            <input type="number" id="deposit-amount" placeholder="PKR Amount">
-
-            <label>Payment Proof (Screenshot)</label>
-            <input type="file" id="payment-screenshot" accept="image/*">
-
-            <div id="upload-status" style="font-size: 12px; text-align: center; margin-bottom: 10px;"></div>
-            <button class="btn-primary" style="background: var(--success-green);" onclick="submitProof()">Verify Transaction</button>
-        </div>
-
-        <div class="glass-card">
-            <h3 style="font-family: 'Orbitron'; font-size: 15px; margin-bottom: 15px;">Client Feedback</h3>
-            <div id="review-area" style="max-height: 200px; overflow-y: auto; margin-bottom: 15px;">
-                <div style="background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin-bottom: 10px;">
-                    <span style="color: var(--warning);">⭐⭐⭐⭐⭐</span><br>
-                    <small><b>Syed Hamza:</b> Best SMM Panel in Pakistan!</small>
-                </div>
-            </div>
-            <div id="star-rating" style="font-size: 25px; cursor: pointer; color: #334155; margin-bottom: 10px;" onclick="setRating()">☆ ☆ ☆ ☆ ☆</div>
-            <textarea id="user-comment" placeholder="Write your experience..." rows="2"></textarea>
-            <button class="btn-primary" style="padding: 10px; font-size: 12px; background: #334155;" onclick="postReview()">Submit Review</button>
-        </div>
-
-        <div class="ad-container">
-            <script type="text/javascript">
-                atOptions = { 'key' : '837b0cf25a2c46b6684bcb6db1c74b00', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-            </script>
-            <script type="text/javascript" src="https://breachuptown.com/837b0cf25a2c46b6684bcb6db1c74b00/invoke.js"></script>
-        </div>
-
-        <footer style="text-align: center; padding: 20px; color: var(--text-dim); font-size: 10px;">
-            © 2026 SKYBOOST CLUSTER | ALL RIGHTS RESERVED
-        </footer>
+        <button class="btn btn-primary" onclick="processOrder()">
+            🚀 PLACE ORDER NOW
+        </button>
     </div>
 
-    <div id="admin-panel" class="admin-overlay">
-        <button class="close-admin-btn" onclick="closeAdmin()">EXIT SYSTEM</button>
-        <h2 style="font-family: 'Orbitron'; color: var(--accent-blue);">MASTER ADMIN</h2>
-        <hr style="border: 0; border-top: 1px solid #1e293b; margin: 20px 0;">
-
-        <div class="admin-card">
-            <h4 style="color: var(--success-green); margin-bottom: 10px;">1. Change Banking Details</h4>
-            <input type="text" id="edit-bank" placeholder="Bank Name (e.g. JazzCash)">
-            <input type="text" id="edit-num" placeholder="Account Number">
-            <input type="text" id="edit-title" placeholder="Account Title">
-            <button class="btn-primary" onclick="saveBank()">Update Live Info</button>
+    <div class="glass-card fade-in">
+        <div class="admin-section-title" style="color: var(--accent-green); font-size: 15px;">
+            <i class="fa-solid fa-wallet"></i> TOP-UP WALLET
         </div>
 
-        <div class="admin-card">
-            <h4 style="color: var(--warning); margin-bottom: 10px;">2. Wallet Injector</h4>
-            <input type="text" id="target-uid" placeholder="Target User ID (e.g. SB-123)">
-            <input type="number" id="inject-amt" placeholder="Amount to Add">
-            <button class="btn-primary" onclick="injectBalance()">Add Balance</button>
+        <div class="bank-info">
+            <div class="bank-row">
+                <span>Method:</span>
+                <b id="live-bank-name">JazzCash / EasyPaisa</b>
+            </div>
+            <div class="bank-row">
+                <span>Account:</span>
+                <b id="live-bank-num" style="color: var(--accent-blue);">03219379597</b>
+            </div>
+            <div class="bank-row">
+                <span>Account Title:</span>
+                <b id="live-bank-title">Zaigham</b>
+            </div>
         </div>
 
-        <div class="admin-card">
-            <h4 style="color: var(--accent-blue); margin-bottom: 10px;">3. Order & Proof Logs</h4>
-            <div id="admin-logs" style="font-size: 11px; color: var(--text-dim);">No recent activity.</div>
+        <div class="input-wrapper">
+            <label>Amount Sent (PKR)</label>
+            <input type="number" id="pay-amount" placeholder="Minimum 100 PKR">
         </div>
+
+        <div class="input-wrapper">
+            <label>Upload Screenshot</label>
+            <input type="file" id="pay-screenshot" accept="image/*">
+        </div>
+
+        <button class="btn btn-success" onclick="sendProof()">
+            <i class="fa-solid fa-check-double"></i> VERIFY TRANSACTION
+        </button>
+    </div>
+</div>
+
+<div id="admin-panel" class="admin-modal">
+    <div class="admin-nav">
+        <h2 style="font-family: Orbitron; color: var(--accent-blue);">MASTER ADMIN</h2>
+        <button onclick="closeAdmin()" style="background: var(--danger); border: none; padding: 10px 20px; color: white; border-radius: 10px; font-weight: 800;">EXIT</button>
     </div>
 
-    <div id="secret-eye-trigger" onclick="handleAdminLogin()">👁️</div>
+    <div class="glass-card" style="border: 2px solid var(--accent-purple);">
+        <div class="admin-section-title" style="color: var(--accent-purple);">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> ADMIN FREE BOOST (PERSONAL)
+        </div>
+        <p style="font-size: 11px; color: var(--text-dim); margin-bottom: 15px;">یہاں سے آپ اپنے چینل کے لیے فری آرڈر لگا سکتے ہیں، کوئی بیلنس نہیں کٹے گا۔</p>
+        
+        <input type="text" id="adm-free-link" placeholder="Enter Your Channel Link">
+        <select id="adm-free-service">
+            <option data-qty="1000">1,000 Subscribers (FREE)</option>
+            <option data-qty="4000">4,000 Watch Hours (FREE)</option>
+            <option data-qty="1000">1,000 Views (FREE)</option>
+        </select>
+        <button class="btn btn-primary" style="background: var(--accent-purple);" onclick="startAdminFreeBoost()">
+            🔥 START FREE BOOST
+        </button>
+    </div>
+
+    <div class="glass-card">
+        <div class="admin-section-title"><i class="fa-solid fa-coins"></i> WALLET INJECTOR</div>
+        <input type="text" id="inj-id" placeholder="Target User ID (e.g. SB-123456)">
+        <input type="number" id="inj-amt" placeholder="Amount to Inject">
+        <button class="btn btn-success" onclick="injectBalance()">ADD BALANCE</button>
+    </div>
+
+    <div class="glass-card">
+        <div class="admin-section-title"><i class="fa-solid fa-gears"></i> BANKING SETTINGS</div>
+        <input type="text" id="set-bank-name" placeholder="Bank Name">
+        <input type="text" id="set-bank-num" placeholder="Account Number">
+        <input type="text" id="set-bank-title" placeholder="Account Title">
+        <button class="btn btn-primary" onclick="updateBankConfig()">UPDATE LIVE INFO</button>
+    </div>
+
+    <div class="glass-card">
+        <div class="admin-section-title"><i class="fa-solid fa-list-ul"></i> ORDER & PROOF LOGS</div>
+        <div id="admin-logs">
+            <p style="font-size: 12px; color: var(--text-dim); text-align: center;">No recent activity.</p>
+        </div>
+    </div>
+</div>
 
 <script>
-    // --- Initial System ---
-    let tapCount = 0;
-    let myUID = localStorage.getItem('sky_uid') || 'SB-' + Math.floor(100000 + Math.random() * 900000);
-    localStorage.setItem('sky_uid', myUID);
+    // --- Core Logic & Data Persistence ---
+    let clicks = 0;
+    let userId = localStorage.getItem('sky_uid') || 'SB-' + Math.floor(100000 + Math.random() * 900000);
+    localStorage.setItem('sky_uid', userId);
 
     window.onload = function() {
-        document.getElementById('uid-display').innerText = myUID;
+        document.getElementById('display-id').innerText = userId;
         refreshUI();
-        loadBank();
+        loadBankSettings();
     };
 
     function refreshUI() {
         let bal = localStorage.getItem('sky_bal') || '0.00';
-        document.getElementById('balance-display').innerText = parseFloat(bal).toLocaleString();
+        document.getElementById('display-bal').innerText = parseFloat(bal).toLocaleString();
     }
 
-    // --- Admin Security ---
-    function handleAdminLogin() {
-        tapCount++;
-        if (tapCount >= 10) {
-            let pass = prompt("ENTER MASTER CODE:");
-            if (pass === "7866_zaigham_5121472") {
-                let phone = prompt("VERIFY PHONE NUMBER:");
-                if (phone === "03219379597") {
+    // --- Order Processing (User) ---
+    function processOrder() {
+        const link = document.getElementById('order-link').value;
+        const select = document.getElementById('order-service');
+        const cost = parseFloat(select.value);
+        const sName = select.options[select.selectedIndex].getAttribute('data-name');
+        const sQty = select.options[select.selectedIndex].getAttribute('data-qty');
+        
+        let currentBal = parseFloat(localStorage.getItem('sky_bal') || 0);
+
+        if(!link || link.length < 5) { alert("Please provide a valid YouTube/Social link."); return; }
+        if(currentBal < cost) { alert("Unauthorized! Insufficient Balance. Please recharge first."); return; }
+
+        // Deduct Balance
+        localStorage.setItem('sky_bal', (currentBal - cost).toFixed(2));
+        refreshUI();
+
+        alert("Order Placed Successfully!");
+        initTracker(sName, sQty, link);
+    }
+
+    // --- Live Tracker Engine ---
+    function initTracker(name, target, url) {
+        document.getElementById('tracker-section').style.display = 'block';
+        document.getElementById('track-service-name').innerText = name;
+        document.getElementById('track-url').innerText = url;
+        document.getElementById('count-target').innerText = target;
+        
+        let currentProgress = 0;
+        const bar = document.getElementById('main-progress');
+        const doneText = document.getElementById('count-done');
+
+        // Logic to simulate real-time progress
+        const interval = setInterval(() => {
+            let increment = Math.floor(Math.random() * 15) + 5;
+            currentProgress += increment;
+
+            if(currentProgress >= target) {
+                currentProgress = target;
+                clearInterval(interval);
+                setTimeout(() => { alert("Order Completed Successfully!"); }, 1000);
+            }
+
+            let percentage = (currentProgress / target) * 100;
+            bar.style.width = percentage + "%";
+            doneText.innerText = currentProgress;
+        }, 4000);
+    }
+
+    // --- Admin Free Boost Logic ---
+    function startAdminFreeBoost() {
+        const link = document.getElementById('adm-free-link').value;
+        const select = document.getElementById('adm-free-service');
+        const sName = select.options[select.selectedIndex].text;
+        const sQty = select.options[select.selectedIndex].getAttribute('data-qty');
+
+        if(!link) { alert("Enter channel link!"); return; }
+
+        alert("✅ Admin Free Boost Started!\nNo balance deducted.");
+        closeAdmin();
+        initTracker(sName, sQty, link);
+    }
+
+    // --- Payment Verification ---
+    function sendProof() {
+        const amt = document.getElementById('pay-amount').value;
+        if(!amt || amt < 10) { alert("Please enter valid amount."); return; }
+
+        // Create log for Admin
+        const logArea = document.getElementById('admin-logs');
+        const log = document.createElement('div');
+        log.className = 'log-item';
+        log.innerHTML = `
+            <b>PAYMENT PROOF</b><br>
+            User: ${userId} | Amount: ${amt} PKR<br>
+            <button onclick="approvePay(this, '${userId}', ${amt})" style="background:var(--accent-green); border:none; color:white; padding:5px; margin-top:5px; border-radius:5px; cursor:pointer;">APPROVE</button>
+        `;
+        
+        if(logArea.innerText.includes("No recent activity")) logArea.innerHTML = "";
+        logArea.prepend(log);
+
+        alert("Screenshot Sent! Admin will verify and add PKR " + amt + " to your wallet soon.");
+        document.getElementById('pay-amount').value = "";
+    }
+
+    function approvePay(btn, targetId, amount) {
+        if(targetId === userId) {
+            let b = parseFloat(localStorage.getItem('sky_bal') || 0);
+            localStorage.setItem('sky_bal', (b + amount).toFixed(2));
+            refreshUI();
+        }
+        btn.parentElement.innerHTML = "✅ Payment Approved: " + amount + " PKR";
+    }
+
+    // --- Wallet Injector (Admin) ---
+    function injectBalance() {
+        const tid = document.getElementById('inj-id').value;
+        const tamt = parseFloat(document.getElementById('inj-amt').value);
+
+        if(tid === userId) {
+            let b = parseFloat(localStorage.getItem('sky_bal') || 0);
+            localStorage.setItem('sky_bal', (b + tamt).toFixed(2));
+            refreshUI();
+            alert("Balance Injected Successfully!");
+        } else {
+            alert("Error: User not found in current session.");
+        }
+    }
+
+    // --- Admin Authentication ---
+    function adminAuth() {
+        clicks++;
+        if(clicks >= 8) {
+            let code = prompt("Enter Master Admin Code:");
+            if(code === "7866_zaigham_5121472") {
+                let phone = prompt("Verify Phone Number:");
+                if(phone === "03219379597") {
                     document.getElementById('admin-panel').style.display = 'block';
-                } else { alert("Verification Failed!"); }
+                } else { alert("Unauthorized!"); }
             } else { alert("Unauthorized!"); }
-            tapCount = 0;
+            clicks = 0;
         }
     }
 
     function closeAdmin() { document.getElementById('admin-panel').style.display = 'none'; }
 
-    // --- Bank Management ---
-    function saveBank() {
-        localStorage.setItem('bank_n', document.getElementById('edit-bank').value);
-        localStorage.setItem('bank_num', document.getElementById('edit-num').value);
-        localStorage.setItem('bank_t', document.getElementById('edit-title').value);
-        loadBank();
-        alert("Bank Details Updated Globally!");
+    // --- Bank Config ---
+    function updateBankConfig() {
+        const n = document.getElementById('set-bank-name').value;
+        const num = document.getElementById('set-bank-num').value;
+        const t = document.getElementById('set-bank-title').value;
+
+        localStorage.setItem('bank_n', n);
+        localStorage.setItem('bank_num', num);
+        localStorage.setItem('bank_t', t);
+        
+        loadBankSettings();
+        alert("Live Banking Info Updated!");
     }
 
-    function loadBank() {
+    function loadBankSettings() {
         if(localStorage.getItem('bank_num')) {
-            document.getElementById('bank-name-display').innerText = localStorage.getItem('bank_n');
-            document.getElementById('acc-num-display').innerText = localStorage.getItem('bank_num');
-            document.getElementById('acc-title-display').innerText = "Title: " + localStorage.getItem('bank_t');
+            document.getElementById('live-bank-name').innerText = localStorage.getItem('bank_n');
+            document.getElementById('live-bank-num').innerText = localStorage.getItem('bank_num');
+            document.getElementById('live-bank-title').innerText = localStorage.getItem('bank_t');
         }
-    }
-
-    // --- Order Logic ---
-    function processOrder() {
-        const link = document.getElementById('target-link').value;
-        const price = parseFloat(document.getElementById('service-select').value);
-        let currentBal = parseFloat(localStorage.getItem('sky_bal') || 0);
-
-        if(!link.includes("youtu")) { alert("Enter valid YouTube link!"); return; }
-        if(currentBal < price) { alert("Insufficient Balance! Please Recharge."); return; }
-
-        localStorage.setItem('sky_bal', (currentBal - price).toFixed(2));
-        refreshUI();
-        alert("🚀 Order Success! Tracking ID: " + Math.random().toString(36).substr(2, 9));
-        
-        logToAdmin("Order: " + price + " PKR for " + link);
-    }
-
-    // --- Payment Proof ---
-    function submitProof() {
-        const amt = document.getElementById('deposit-amount').value;
-        const status = document.getElementById('upload-status');
-        
-        if(!amt || !document.getElementById('payment-screenshot').files[0]) {
-            alert("Fill all fields!"); return;
-        }
-
-        status.innerHTML = "<span style='color:var(--warning)'>⏳ AI Scanning Receipt...</span>";
-        
-        setTimeout(() => {
-            status.innerHTML = "<span style='color:var(--success-green)'>✅ Sent to Admin! Wait 15 mins.</span>";
-            logToAdmin("PAYMENT PROOF: " + amt + " PKR from " + myUID);
-            alert("Verification Request Submitted!");
-        }, 3000);
-    }
-
-    // --- Wallet Injection ---
-    function injectBalance() {
-        const tid = document.getElementById('target-uid').value;
-        const amt = parseFloat(document.getElementById('inject-amt').value);
-
-        if(tid === myUID) {
-            let b = parseFloat(localStorage.getItem('sky_bal') || 0);
-            localStorage.setItem('sky_bal', (b + amt).toFixed(2));
-            refreshUI();
-            alert("Balance Injected!");
-        } else {
-            alert("Balance Logged for User: " + tid);
-        }
-    }
-
-    function logToAdmin(msg) {
-        const logs = document.getElementById('admin-logs');
-        const time = new Date().toLocaleTimeString();
-        logs.innerHTML = `<div>[${time}] ${msg}</div>` + logs.innerHTML;
-    }
-
-    // --- Reviews ---
-    function setRating() {
-        document.getElementById('star-rating').innerHTML = "⭐⭐⭐⭐⭐";
-        document.getElementById('star-rating').style.color = "gold";
-    }
-
-    function postReview() {
-        const txt = document.getElementById('user-comment').value;
-        if(!txt) return;
-        const div = document.createElement('div');
-        div.style.cssText = "background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin-bottom: 10px;";
-        div.innerHTML = `<span style="color: var(--warning);">⭐⭐⭐⭐⭐</span><br><small><b>You (Verified):</b> ${txt}</small>`;
-        document.getElementById('review-area').prepend(div);
-        document.getElementById('user-comment').value = "";
     }
 </script>
-
-<script type='text/javascript' src='//breachuptown.com/s5ev5djn?key=339a3586f98fce185fe09ec12e478200'></script>
-<script type='text/javascript' src='//breachuptown.com/f9/0a/86/f90a86e82e8ee015d9ef89d2a61.js'></script>
 
 </body>
 </html>

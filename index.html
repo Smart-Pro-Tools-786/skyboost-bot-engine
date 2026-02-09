@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkyBoost SMM | Premium Growth Panel</title>
+    <title>SkyBoost SMM | Ultimate Automation Panel</title>
     
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
@@ -20,482 +22,453 @@
             --warning: #facc15;
             --danger: #ef4444;
             --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
+            --neon-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-main);
             line-height: 1.6;
-            overflow-x: hidden;
-            background-image: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent),
-                              radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.1), transparent);
+            background-image: radial-gradient(circle at 50% -20%, #1e293b, var(--bg-dark));
+            min-height: 100vh;
         }
+
+        .container { max-width: 600px; margin: 0 auto; padding: 15px; }
 
         /* --- Header & Logo --- */
-        .header {
-            padding: 40px 20px;
-            text-align: center;
-        }
-
+        header { text-align: center; padding: 40px 0 20px; }
         .main-logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 32px;
+            font-family: 'Orbitron';
+            font-size: clamp(24px, 8vw, 36px);
             font-weight: 700;
-            letter-spacing: 2px;
-            background: linear-gradient(to right, #60a5fa, #34d399);
+            background: linear-gradient(to right, #60a5fa, #34d399, #8b5cf6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            filter: drop-shadow(0 0 10px rgba(96, 165, 250, 0.3));
+        }
+        .tagline { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 3px; margin-top: 5px; }
+
+        /* --- Social Integration Bar --- */
+        .social-bar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            background: var(--glass);
+            padding: 12px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .social-bar a {
+            color: var(--text-main);
+            font-size: 20px;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .social-bar a:hover { transform: translateY(-5px); filter: drop-shadow(0 0 8px currentColor); }
+        .fa-whatsapp { color: #25D366; }
+        .fa-facebook { color: #1877F2; }
+        .fa-youtube { color: #FF0000; }
+        .fa-tiktok { color: #ffffff; }
+
+        /* --- Stats Card --- */
+        .stats-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: var(--bg-card);
+            padding: 15px;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent-blue);
+        }
+        .stat-card.bal::after { background: var(--warning); }
+        .stat-label { font-size: 10px; color: var(--text-dim); font-weight: 800; display: block; }
+        .stat-value { font-family: 'Orbitron'; font-size: 16px; display: block; margin-top: 5px; }
+
+        /* --- Ad Units --- */
+        .ad-container {
+            margin: 15px 0;
+            border-radius: 12px;
+            background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02) 10px, transparent 10px, transparent 20px);
+            border: 1px dashed rgba(255,255,255,0.1);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dim);
+            font-size: 11px;
             text-transform: uppercase;
         }
 
-        /* --- Main Layout --- */
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 0 20px 100px 20px;
-        }
-
-        .glass-card {
+        /* --- Main Engine Form --- */
+        .engine-card {
             background: var(--bg-card);
-            border: 1px solid var(--border);
             border-radius: 24px;
-            padding: 24px;
-            margin-bottom: 24px;
-            backdrop-filter: blur(10px);
+            padding: 25px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            margin-bottom: 25px;
         }
-
-        /* --- User Stats Bar --- */
-        .user-stats-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--glass);
-            border: 1px solid var(--border);
-            padding: 15px 25px;
-            border-radius: 100px;
-            margin-bottom: 30px;
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block; font-size: 12px; font-weight: 700; color: var(--accent-blue);
+            margin-bottom: 8px; text-transform: uppercase;
         }
-
-        .stat-group { display: flex; flex-direction: column; }
-        .stat-label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; font-weight: 700; }
-        .stat-value { font-family: 'Orbitron'; font-size: 14px; color: var(--accent-blue); }
-
-        /* --- Input Styles --- */
-        .input-wrapper { margin-bottom: 20px; }
-        label { display: block; font-size: 12px; font-weight: 600; color: var(--text-dim); margin-bottom: 8px; margin-left: 5px; }
-        
-        input, select, textarea {
+        .input-box {
             width: 100%;
             background: #0b1224;
-            border: 1px solid var(--border);
-            padding: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 14px;
+            padding: 15px;
             color: white;
             font-size: 14px;
             outline: none;
             transition: 0.3s;
         }
+        .input-box:focus { border-color: var(--accent-blue); box-shadow: 0 0 10px rgba(59, 130, 246, 0.2); }
 
-        input:focus, select:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
-
-        /* --- Buttons --- */
         .btn {
             width: 100%;
-            padding: 18px;
+            padding: 16px;
             border-radius: 14px;
             border: none;
             font-weight: 800;
-            font-size: 14px;
+            font-family: 'Orbitron';
             cursor: pointer;
-            text-transform: uppercase;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.4s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
+        .btn-primary { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; box-shadow: var(--neon-shadow); }
+        .btn-primary:active { transform: scale(0.98); }
 
-        .btn-primary { background: var(--accent-blue); color: white; box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3); }
-        .btn-success { background: var(--accent-green); color: white; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); }
-        .btn:hover { transform: translateY(-3px); opacity: 0.9; }
-        .btn:active { transform: translateY(1px); }
-
-        /* --- Live Progress Tracker --- */
-        .tracker-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .pulse-icon { width: 10px; height: 10px; background: var(--accent-green); border-radius: 50%; animation: pulse 1.5s infinite; }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0px rgba(16, 185, 129, 0.7); }
-            100% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-        }
-
-        .progress-container { background: #0b1224; height: 12px; border-radius: 20px; margin: 20px 0; overflow: hidden; border: 1px solid var(--border); }
-        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); border-radius: 20px; transition: width 1s ease; }
-
-        .counter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .counter-box { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 15px; text-align: center; border: 1px solid var(--border); }
-        .counter-num { display: block; font-family: 'Orbitron'; font-size: 20px; color: var(--accent-green); }
-
-        /* --- Payment Section --- */
-        .bank-info { background: linear-gradient(135deg, #1e293b, #0f172a); padding: 20px; border-radius: 18px; border: 1px dashed var(--accent-blue); margin-bottom: 20px; }
-        .bank-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px; }
-        .copy-btn { color: var(--accent-blue); cursor: pointer; font-size: 12px; }
-
-        /* --- Admin Panel Styles --- */
-        .admin-modal {
+        /* --- Tracker Section --- */
+        #tracker-container {
+            background: #0f172a;
+            border: 2px solid var(--accent-green);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
             display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-dark);
-            z-index: 1000;
-            overflow-y: auto;
-            padding: 30px 20px;
+            animation: slideIn 0.5s ease;
         }
-
-        .admin-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
-        .admin-section-title { font-size: 18px; color: var(--warning); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
-        .log-item { background: #1e293b; padding: 15px; border-radius: 12px; margin-bottom: 10px; font-size: 12px; border-left: 4px solid var(--accent-blue); }
+        .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .status-dot { height: 8px; width: 8px; background: var(--accent-green); border-radius: 50%; display: inline-block; margin-right: 5px; box-shadow: 0 0 8px var(--accent-green); }
+        
+        .meter-bg { background: #1e293b; height: 12px; border-radius: 10px; overflow: hidden; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); }
+        .meter-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-green)); transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
 
-        #secret-trigger {
-            position: fixed; bottom: 20px; left: 20px;
-            width: 40px; height: 40px;
-            background: transparent;
-            z-index: 999;
-            cursor: pointer;
-            opacity: 0.1;
+        .tracker-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .tracker-box { background: rgba(0,0,0,0.2); padding: 12px; border-radius: 12px; text-align: center; }
+        .val-large { font-family: 'Orbitron'; font-size: 20px; color: var(--accent-green); display: block; }
+
+        /* --- Admin Modal --- */
+        .modal {
+            display: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-dark); z-index: 1000; padding: 20px;
+            overflow-y: auto;
         }
-
-        /* --- Animations --- */
-        .fade-in { animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
+        
+        #secret-trigger { position: fixed; bottom: 10px; left: 10px; width: 40px; height: 40px; opacity: 0.02; cursor: pointer; z-index: 9999; }
 
     </style>
 </head>
 <body>
 
-<div id="secret-trigger" onclick="adminAuth()"></div>
+<div id="secret-trigger" onclick="adminGate()"></div>
 
 <div class="container">
-    <div class="header">
-        <h1 class="main-logo">SkyBoost SMM</h1>
-        <p style="font-size: 10px; color: var(--text-dim); margin-top: 5px;">WORLD'S FASTEST SOCIAL GROWTH PANEL</p>
+    <header>
+        <h1 class="main-logo">SKYBOOST SMM</h1>
+        <p class="tagline">World's Fastest Growth Engine</p>
+    </header>
+
+    <div class="social-bar">
+        <a href="https://wa.me/yournumber" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://facebook.com/yourpage" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://youtube.com/@yourchannel" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://tiktok.com/@yourprofile" target="_blank"><i class="fab fa-tiktok"></i></a>
     </div>
 
-    <div class="user-stats-bar">
-        <div class="stat-group">
-            <span class="stat-label">Member ID</span>
-            <span id="display-id" class="stat-value">...</span>
+    <div class="ad-container" id="ad-1">AD SLOT #1 (HEADER)</div>
+
+    <div class="stats-wrapper">
+        <div class="stat-card">
+            <span class="stat-label">MEMBER ID</span>
+            <span class="stat-value" id="u-id" style="color: var(--accent-blue);">SB-LOADING</span>
         </div>
-        <div class="stat-group" style="text-align: right;">
-            <span class="stat-label">Available Balance</span>
-            <span class="stat-value" style="color: var(--warning);">PKR <span id="display-bal">0.00</span></span>
+        <div class="stat-card bal">
+            <span class="stat-label">WALLET BALANCE</span>
+            <span class="stat-value" id="u-bal" style="color: var(--warning);">0.00 PKR</span>
         </div>
     </div>
 
-    <div id="tracker-section" class="glass-card fade-in" style="display: none; border: 1px solid var(--accent-green);">
-        <div class="tracker-header">
-            <span style="font-size: 12px; font-weight: 800; color: var(--accent-green);">
-                <i class="fa-solid fa-satellite-dish"></i> LIVE PROCESSING
-            </span>
-            <div class="pulse-icon"></div>
-        </div>
-        <p id="track-service-name" style="font-size: 14px; font-weight: 700;"></p>
-        <p id="track-url" style="font-size: 11px; color: var(--text-dim); word-break: break-all; margin-top: 5px;"></p>
-        
-        <div class="progress-container">
-            <div id="main-progress" class="progress-bar"></div>
-        </div>
+    <div class="ad-container" id="ad-2">AD SLOT #2 (ABOVE TRACKER)</div>
 
-        <div class="counter-grid">
-            <div class="counter-box">
-                <span class="stat-label">Delivered</span>
-                <span id="count-done" class="counter-num">0</span>
+    <div id="tracker-container">
+        <div class="progress-header">
+            <span style="font-size: 11px; font-weight: 800;"><span class="status-dot"></span>ENGINE PROCESSING</span>
+            <span id="order-type-tag" style="font-size: 9px; background: var(--glass); padding: 4px 10px; border-radius: 4px;"></span>
+        </div>
+        <div class="meter-bg"><div id="p-bar" class="meter-fill"></div></div>
+        <div class="tracker-grid">
+            <div class="tracker-box">
+                <span class="stat-label">DELIVERED</span>
+                <span id="s-done" class="val-large">0</span>
             </div>
-            <div class="counter-box">
-                <span class="stat-label">Total Target</span>
-                <span id="count-target" class="counter-num">0</span>
+            <div class="tracker-box">
+                <span class="stat-label">TOTAL TARGET</span>
+                <span id="s-total" class="val-large">0</span>
             </div>
         </div>
+        <p id="tracker-link" style="font-size: 9px; color: var(--text-dim); margin-top: 10px; word-break: break-all; text-align: center;"></p>
     </div>
 
-    <div class="glass-card fade-in">
-        <div class="admin-section-title" style="color: var(--text-main); font-size: 15px;">
-            <i class="fa-solid fa-cart-shopping" style="color: var(--accent-blue);"></i> NEW ORDER
+    <div class="engine-card">
+        <div class="form-group">
+            <label><i class="fas fa-link"></i> Target URL (Video/Channel)</label>
+            <input type="text" id="order-link" class="input-box" placeholder="https://youtube.com/watch?v=...">
         </div>
-
-        <div class="input-wrapper">
-            <label>Paste Link (YouTube/Social)</label>
-            <input type="text" id="order-link" placeholder="https://youtube.com/watch?v=...">
-        </div>
-
-        <div class="input-wrapper">
-            <label>Select Service</label>
-            <select id="order-service">
-                <option value="3000" data-name="1000 Subscribers" data-qty="1000">1,000 Subscribers - 3000 PKR</option>
-                <option value="5000" data-name="4000 Watch Hours" data-qty="4000">4,000 Watch Hours - 5000 PKR</option>
-                <option value="200" data-name="1000 Video Views" data-qty="1000">1,000 Video Views - 200 PKR</option>
-                <option value="150" data-name="1000 Video Likes" data-qty="1000">1,000 Video Likes - 150 PKR</option>
+        <div class="form-group">
+            <label><i class="fas fa-rocket"></i> Select Service Engine</label>
+            <select id="order-service" class="input-box">
+                <option value="3000" data-type="Subscribers" data-qty="1000">🚀 1000 YouTube Subscribers - 3000 PKR</option>
+                <option value="5500" data-type="WatchHours" data-qty="4000">⏱️ 4000 YouTube Watch Hours - 5500 PKR</option>
+                <option value="250" data-type="Views" data-qty="1000">👁️ 1000 YouTube High-Retention Views - 250 PKR</option>
+                <option value="400" data-type="Likes" data-qty="1000">👍 1000 YouTube Real Likes - 400 PKR</option>
+                <option value="150" data-type="TikTokFollowers" data-qty="1000">📱 1000 TikTok Followers - 150 PKR</option>
             </select>
         </div>
-
-        <button class="btn btn-primary" onclick="processOrder()">
-            🚀 PLACE ORDER NOW
-        </button>
+        <button class="btn btn-primary" onclick="initiateOrder()">🚀 FIRE ENGINE</button>
     </div>
 
-    <div class="glass-card fade-in">
-        <div class="admin-section-title" style="color: var(--accent-green); font-size: 15px;">
-            <i class="fa-solid fa-wallet"></i> TOP-UP WALLET
-        </div>
+    <div class="ad-container" id="ad-3">AD SLOT #3 (MID-PAGE)</div>
+    <div class="ad-container" id="ad-4">AD SLOT #4 (MID-PAGE)</div>
 
-        <div class="bank-info">
-            <div class="bank-row">
-                <span>Method:</span>
-                <b id="live-bank-name">JazzCash / EasyPaisa</b>
-            </div>
-            <div class="bank-row">
-                <span>Account:</span>
-                <b id="live-bank-num" style="color: var(--accent-blue);">03219379597</b>
-            </div>
-            <div class="bank-row">
-                <span>Account Title:</span>
-                <b id="live-bank-title">Zaigham</b>
-            </div>
+    <div class="engine-card" style="border-color: var(--accent-green);">
+        <h3 style="font-family: Orbitron; font-size: 14px; color: var(--accent-green); margin-bottom: 20px;">WALLET RECHARGE</h3>
+        <div id="bank-info-box" style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid rgba(16, 185, 129, 0.2);">
+            <p id="b-name" style="font-weight: 800; color: #fff;">Loading Bank...</p>
+            <p id="b-num" style="font-family: monospace; font-size: 18px; color: var(--warning); margin: 5px 0;"></p>
+            <p id="b-title" style="font-size: 12px; color: var(--text-dim);"></p>
         </div>
-
-        <div class="input-wrapper">
+        <div class="form-group">
             <label>Amount Sent (PKR)</label>
-            <input type="number" id="pay-amount" placeholder="Minimum 100 PKR">
+            <input type="number" id="pay-amt" class="input-box" placeholder="Min: 100 PKR">
         </div>
-
-        <div class="input-wrapper">
-            <label>Upload Screenshot</label>
-            <input type="file" id="pay-screenshot" accept="image/*">
-        </div>
-
-        <button class="btn btn-success" onclick="sendProof()">
-            <i class="fa-solid fa-check-double"></i> VERIFY TRANSACTION
-        </button>
+        <button class="btn" style="background: var(--accent-green); color: white;" onclick="submitPayment()">VERIFY TRANSACTION</button>
     </div>
+
+    <div class="ad-container">AD SLOT #5</div>
+    <div class="ad-container">AD SLOT #6</div>
+    <div class="ad-container">AD SLOT #7</div>
+    <div class="ad-container">AD SLOT #8</div>
+    <div class="ad-container">AD SLOT #9</div>
+    <div class="ad-container" style="margin-bottom: 50px;">AD SLOT #10</div>
+
 </div>
 
-<div id="admin-panel" class="admin-modal">
-    <div class="admin-nav">
-        <h2 style="font-family: Orbitron; color: var(--accent-blue);">MASTER ADMIN</h2>
-        <button onclick="closeAdmin()" style="background: var(--danger); border: none; padding: 10px 20px; color: white; border-radius: 10px; font-weight: 800;">EXIT</button>
+<div id="admin-panel" class="modal">
+    <div class="admin-header">
+        <h2 style="font-family: Orbitron; color: var(--accent-blue);">ENGINE CONTROL</h2>
+        <button onclick="closeAdmin()" style="background: var(--danger); border: none; color: white; padding: 10px 20px; border-radius: 8px;">CLOSE</button>
     </div>
 
-    <div class="glass-card" style="border: 2px solid var(--accent-purple);">
-        <div class="admin-section-title" style="color: var(--accent-purple);">
-            <i class="fa-solid fa-wand-magic-sparkles"></i> ADMIN FREE BOOST (PERSONAL)
-        </div>
-        <p style="font-size: 11px; color: var(--text-dim); margin-bottom: 15px;">یہاں سے آپ اپنے چینل کے لیے فری آرڈر لگا سکتے ہیں، کوئی بیلنس نہیں کٹے گا۔</p>
-        
-        <input type="text" id="adm-free-link" placeholder="Enter Your Channel Link">
-        <select id="adm-free-service">
-            <option data-qty="1000">1,000 Subscribers (FREE)</option>
-            <option data-qty="4000">4,000 Watch Hours (FREE)</option>
-            <option data-qty="1000">1,000 Views (FREE)</option>
+    <div class="engine-card" style="border-color: var(--accent-purple);">
+        <h4 style="color: var(--warning); margin-bottom: 15px;">FREE INJECTOR (ADMIN)</h4>
+        <input type="text" id="adm-link" class="input-box" placeholder="Channel Link">
+        <select id="adm-service" class="input-box">
+            <option data-type="Subscribers" data-qty="1000">1000 Subs (FREE)</option>
+            <option data-type="Views" data-qty="1000">1000 Views (FREE)</option>
         </select>
-        <button class="btn btn-primary" style="background: var(--accent-purple);" onclick="startAdminFreeBoost()">
-            🔥 START FREE BOOST
-        </button>
+        <button class="btn" style="background: var(--accent-purple); color: white;" onclick="adminFreeInject()">INJECT NOW</button>
     </div>
 
-    <div class="glass-card">
-        <div class="admin-section-title"><i class="fa-solid fa-coins"></i> WALLET INJECTOR</div>
-        <input type="text" id="inj-id" placeholder="Target User ID (e.g. SB-123456)">
-        <input type="number" id="inj-amt" placeholder="Amount to Inject">
-        <button class="btn btn-success" onclick="injectBalance()">ADD BALANCE</button>
+    <div class="engine-card">
+        <h4>WALLET MANAGEMENT</h4>
+        <input type="text" id="adm-uid" class="input-box" placeholder="User ID (SB-XXXX)">
+        <input type="number" id="adm-amt" class="input-box" placeholder="Amount to Add">
+        <button class="btn btn-primary" onclick="adminAddWallet()">UPDATE BALANCE</button>
     </div>
 
-    <div class="glass-card">
-        <div class="admin-section-title"><i class="fa-solid fa-gears"></i> BANKING SETTINGS</div>
-        <input type="text" id="set-bank-name" placeholder="Bank Name">
-        <input type="text" id="set-bank-num" placeholder="Account Number">
-        <input type="text" id="set-bank-title" placeholder="Account Title">
-        <button class="btn btn-primary" onclick="updateBankConfig()">UPDATE LIVE INFO</button>
-    </div>
-
-    <div class="glass-card">
-        <div class="admin-section-title"><i class="fa-solid fa-list-ul"></i> ORDER & PROOF LOGS</div>
-        <div id="admin-logs">
-            <p style="font-size: 12px; color: var(--text-dim); text-align: center;">No recent activity.</p>
-        </div>
+    <div class="engine-card">
+        <h4>BANK SETTINGS</h4>
+        <input type="text" id="set-b-name" class="input-box" placeholder="Bank Name">
+        <input type="text" id="set-b-num" class="input-box" placeholder="Account Number">
+        <input type="text" id="set-b-title" class="input-box" placeholder="Account Title">
+        <button class="btn" style="background: var(--accent-green); color: white;" onclick="updateBankConfig()">SAVE CONFIG</button>
     </div>
 </div>
 
 <script>
-    // --- Core Logic & Data Persistence ---
-    let clicks = 0;
-    let userId = localStorage.getItem('sky_uid') || 'SB-' + Math.floor(100000 + Math.random() * 900000);
-    localStorage.setItem('sky_uid', userId);
+    // --- 1. FIREBASE INITIALIZATION ---
+    // Yahan apni sahi Firebase details dalein
+    const firebaseConfig = {
+        apiKey: "AIzaSyAs-Actual-Key-Here",
+        authDomain: "skyboost-project.firebaseapp.com",
+        databaseURL: "https://skyboost-default-rtdb.firebaseio.com",
+        projectId: "skyboost-project",
+        storageBucket: "skyboost-project.appspot.com",
+        messagingSenderId: "123456789",
+        appId: "1:1234567:web:abcdef"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-    window.onload = function() {
-        document.getElementById('display-id').innerText = userId;
-        refreshUI();
-        loadBankSettings();
+    // --- 2. USER SYSTEM ---
+    let myID = localStorage.getItem('sky_uid') || 'SB-' + Math.floor(100000 + Math.random()*900000);
+    localStorage.setItem('sky_uid', myID);
+
+    window.onload = () => {
+        document.getElementById('u-id').innerText = myID;
+        refreshBalance();
+        loadSystemConfig();
+        syncLiveTracker();
     };
 
-    function refreshUI() {
-        let bal = localStorage.getItem('sky_bal') || '0.00';
-        document.getElementById('display-bal').innerText = parseFloat(bal).toLocaleString();
+    function refreshBalance() {
+        db.ref('users/' + myID + '/balance').on('value', (snap) => {
+            let bal = snap.val() || 0;
+            document.getElementById('u-bal').innerText = parseFloat(bal).toLocaleString() + " PKR";
+            localStorage.setItem('sky_bal', bal);
+        });
     }
 
-    // --- Order Processing (User) ---
-    function processOrder() {
+    // --- 3. CORE ORDER LOGIC (Automated Engine) ---
+    function initiateOrder() {
         const link = document.getElementById('order-link').value;
-        const select = document.getElementById('order-service');
-        const cost = parseFloat(select.value);
-        const sName = select.options[select.selectedIndex].getAttribute('data-name');
-        const sQty = select.options[select.selectedIndex].getAttribute('data-qty');
-        
+        const service = document.getElementById('order-service');
+        const price = parseFloat(service.value);
+        const type = service.options[service.selectedIndex].getAttribute('data-type');
+        const qty = parseInt(service.options[service.selectedIndex].getAttribute('data-qty'));
         let currentBal = parseFloat(localStorage.getItem('sky_bal') || 0);
 
-        if(!link || link.length < 5) { alert("Please provide a valid YouTube/Social link."); return; }
-        if(currentBal < cost) { alert("Unauthorized! Insufficient Balance. Please recharge first."); return; }
+        if(!link.includes('http')) return alert("⚠️ Please enter a valid URL!");
+        if(currentBal < price) return alert("❌ Insufficient Balance! Please recharge your wallet.");
 
-        // Deduct Balance
-        localStorage.setItem('sky_bal', (currentBal - cost).toFixed(2));
-        refreshUI();
+        // Deduct Balance & Create Order
+        db.ref('users/' + myID + '/balance').set(currentBal - price);
+        
+        const orderID = "ORD-" + Date.now();
+        const orderData = {
+            id: orderID,
+            link: link,
+            type: type,
+            target: qty,
+            delivered: 0,
+            status: "Processing",
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+        };
 
-        alert("Order Placed Successfully!");
-        initTracker(sName, sQty, link);
+        db.ref('active_orders/' + myID).set(orderData);
+        alert("🚀 ENGINE IGNITED! Your order is being processed by the SkyBoost Cluster.");
     }
 
-    // --- Live Tracker Engine ---
-    function initTracker(name, target, url) {
-        document.getElementById('tracker-section').style.display = 'block';
-        document.getElementById('track-service-name').innerText = name;
-        document.getElementById('track-url').innerText = url;
-        document.getElementById('count-target').innerText = target;
-        
-        let currentProgress = 0;
-        const bar = document.getElementById('main-progress');
-        const doneText = document.getElementById('count-done');
+    // --- 4. LIVE REAL-TIME METER SYNC ---
+    function syncLiveTracker() {
+        db.ref('active_orders/' + myID).on('value', (snap) => {
+            const data = snap.val();
+            const container = document.getElementById('tracker-container');
+            
+            if(data && data.status !== "Completed") {
+                container.style.display = 'block';
+                document.getElementById('s-total').innerText = data.target;
+                document.getElementById('s-done').innerText = data.delivered;
+                document.getElementById('order-type-tag').innerText = data.type;
+                document.getElementById('tracker-link').innerText = data.link;
 
-        // Logic to simulate real-time progress
-        const interval = setInterval(() => {
-            let increment = Math.floor(Math.random() * 15) + 5;
-            currentProgress += increment;
+                // Progress Bar Logic
+                let perc = (data.delivered / data.target) * 100;
+                document.getElementById('p-bar').style.width = (perc > 100 ? 100 : perc) + "%";
 
-            if(currentProgress >= target) {
-                currentProgress = target;
-                clearInterval(interval);
-                setTimeout(() => { alert("Order Completed Successfully!"); }, 1000);
+                if(data.delivered >= data.target) {
+                    setTimeout(() => { db.ref('active_orders/' + myID).remove(); }, 5000);
+                }
+            } else {
+                container.style.display = 'none';
             }
-
-            let percentage = (currentProgress / target) * 100;
-            bar.style.width = percentage + "%";
-            doneText.innerText = currentProgress;
-        }, 4000);
+        });
     }
 
-    // --- Admin Free Boost Logic ---
-    function startAdminFreeBoost() {
-        const link = document.getElementById('adm-free-link').value;
-        const select = document.getElementById('adm-free-service');
-        const sName = select.options[select.selectedIndex].text;
-        const sQty = select.options[select.selectedIndex].getAttribute('data-qty');
-
-        if(!link) { alert("Enter channel link!"); return; }
-
-        alert("✅ Admin Free Boost Started!\nNo balance deducted.");
-        closeAdmin();
-        initTracker(sName, sQty, link);
+    // --- 5. SYSTEM CONFIG & BANK ---
+    function loadSystemConfig() {
+        db.ref('system/bank').on('value', (snap) => {
+            const b = snap.val();
+            if(b) {
+                document.getElementById('b-name').innerText = b.name;
+                document.getElementById('b-num').innerText = b.number;
+                document.getElementById('b-title').innerText = "Title: " + b.title;
+            }
+        });
     }
 
-    // --- Payment Verification ---
-    function sendProof() {
-        const amt = document.getElementById('pay-amount').value;
-        if(!amt || amt < 10) { alert("Please enter valid amount."); return; }
-
-        // Create log for Admin
-        const logArea = document.getElementById('admin-logs');
-        const log = document.createElement('div');
-        log.className = 'log-item';
-        log.innerHTML = `
-            <b>PAYMENT PROOF</b><br>
-            User: ${userId} | Amount: ${amt} PKR<br>
-            <button onclick="approvePay(this, '${userId}', ${amt})" style="background:var(--accent-green); border:none; color:white; padding:5px; margin-top:5px; border-radius:5px; cursor:pointer;">APPROVE</button>
-        `;
+    function submitPayment() {
+        let amt = document.getElementById('pay-amt').value;
+        if(amt < 100) return alert("Minimum recharge is 100 PKR");
         
-        if(logArea.innerText.includes("No recent activity")) logArea.innerHTML = "";
-        logArea.prepend(log);
-
-        alert("Screenshot Sent! Admin will verify and add PKR " + amt + " to your wallet soon.");
-        document.getElementById('pay-amount').value = "";
+        db.ref('recharge_requests').push({
+            uid: myID,
+            amount: amt,
+            status: "Pending",
+            time: new Date().toLocaleString()
+        });
+        alert("✅ Request Sent! Please wait 10-30 mins for admin verification.");
     }
 
-    function approvePay(btn, targetId, amount) {
-        if(targetId === userId) {
-            let b = parseFloat(localStorage.getItem('sky_bal') || 0);
-            localStorage.setItem('sky_bal', (b + amount).toFixed(2));
-            refreshUI();
-        }
-        btn.parentElement.innerHTML = "✅ Payment Approved: " + amount + " PKR";
+    // --- 6. ADMIN ENGINE CONTROL ---
+    function adminGate() {
+        let p = prompt("ACCESS CODE:");
+        if(p === "7866_zaigham_5121472") document.getElementById('admin-panel').style.display = 'block';
     }
-
-    // --- Wallet Injector (Admin) ---
-    function injectBalance() {
-        const tid = document.getElementById('inj-id').value;
-        const tamt = parseFloat(document.getElementById('inj-amt').value);
-
-        if(tid === userId) {
-            let b = parseFloat(localStorage.getItem('sky_bal') || 0);
-            localStorage.setItem('sky_bal', (b + tamt).toFixed(2));
-            refreshUI();
-            alert("Balance Injected Successfully!");
-        } else {
-            alert("Error: User not found in current session.");
-        }
-    }
-
-    // --- Admin Authentication ---
-    function adminAuth() {
-        clicks++;
-        if(clicks >= 8) {
-            let code = prompt("Enter Master Admin Code:");
-            if(code === "7866_zaigham_5121472") {
-                let phone = prompt("Verify Phone Number:");
-                if(phone === "03219379597") {
-                    document.getElementById('admin-panel').style.display = 'block';
-                } else { alert("Unauthorized!"); }
-            } else { alert("Unauthorized!"); }
-            clicks = 0;
-        }
-    }
-
+    
     function closeAdmin() { document.getElementById('admin-panel').style.display = 'none'; }
 
-    // --- Bank Config ---
     function updateBankConfig() {
-        const n = document.getElementById('set-bank-name').value;
-        const num = document.getElementById('set-bank-num').value;
-        const t = document.getElementById('set-bank-title').value;
-
-        localStorage.setItem('bank_n', n);
-        localStorage.setItem('bank_num', num);
-        localStorage.setItem('bank_t', t);
-        
-        loadBankSettings();
-        alert("Live Banking Info Updated!");
+        db.ref('system/bank').set({
+            name: document.getElementById('set-b-name').value,
+            number: document.getElementById('set-b-num').value,
+            title: document.getElementById('set-b-title').value
+        });
+        alert("Bank Config Updated!");
     }
 
-    function loadBankSettings() {
-        if(localStorage.getItem('bank_num')) {
-            document.getElementById('live-bank-name').innerText = localStorage.getItem('bank_n');
-            document.getElementById('live-bank-num').innerText = localStorage.getItem('bank_num');
-            document.getElementById('live-bank-title').innerText = localStorage.getItem('bank_t');
-        }
+    function adminAddWallet() {
+        let target = document.getElementById('adm-uid').value;
+        let amt = parseFloat(document.getElementById('adm-amt').value);
+        db.ref('users/' + target + '/balance').transaction((current) => (current || 0) + amt);
+        alert("Wallet Injected Successfully!");
+    }
+
+    function adminFreeInject() {
+        const link = document.getElementById('adm-link').value;
+        const sel = document.getElementById('adm-service');
+        const type = sel.options[sel.selectedIndex].getAttribute('data-type');
+        const qty = parseInt(sel.options[sel.selectedIndex].getAttribute('data-qty'));
+        
+        db.ref('active_orders/' + myID).set({
+            link: link, type: type, target: qty, delivered: 0, status: "Admin_Free", timestamp: Date.now()
+        });
+        closeAdmin();
     }
 </script>
-
 </body>
 </html>
